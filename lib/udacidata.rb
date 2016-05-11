@@ -13,5 +13,6 @@ class Udacidata
       csv << [product_to_add.id, product_to_add.brand, product_to_add.name, product_to_add.price]
     end
     product_to_add
+    
   end
 end
