@@ -5,4 +5,10 @@ require 'faker'
 
 def db_seed
   # Your code goes here!
+  10.times do
+    Product.create(
+    brand: Faker::Beer.name,
+    name: Faker::Commerce.product_name,
+    price: Faker::Commerce.price
+    )
 end
