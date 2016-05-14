@@ -36,4 +36,12 @@ class Udacidata
       all[0...n]
     end
   end
+
+  def self.last(n=0)
+    if n == 0
+      all.last
+    else
+      all[0...n]
+    end
+  end
 end
