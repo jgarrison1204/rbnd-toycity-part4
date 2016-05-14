@@ -44,4 +44,8 @@ class Udacidata
       all[0...n]
     end
   end
+
+  def self.find(n)
+    all.each {|product| return product if product.id == n}
+  end
 end
