@@ -25,12 +25,14 @@ class Udacidata
     products
   end
 
-  #Products array (line 25) is empty we when run puts products.empty?
-  #So calling all in self.first is calling an empty array, which might be cause of nil value in self.first
-  #Not sure how test_all_method_returns_all_products_in_database can pass if products is empty.
-  #How can line 42 in Udacidata_test actual = Product.all.length = !empty and Product.all.length called in self.first be nil?
-
-  def self.first
-    all.first
+  #Sets n = 1
+  def self.first(n = 1)
+    #default returns product object
+    if n == 1
+        all.first
+    #If not default then returns an array of products.
+    else
+        all
+    end
   end
 end
