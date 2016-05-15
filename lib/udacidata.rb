@@ -73,4 +73,8 @@ class Udacidata
     #returns deleted product
     return self
   end
+
+  def find_by_brand(brand)
+    all.each {|product| return product if product.brand == brand}
+  end
 end
