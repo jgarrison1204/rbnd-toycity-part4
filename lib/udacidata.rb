@@ -48,4 +48,29 @@ class Udacidata
   def self.find(n)
     all.each {|product| return product if product.id == n}
   end
+
+  def self.destroy(n)
+    #locate product to remove
+    product_to_remove = find(n)
+    #delete product
+    all.delete(product_to_remove)
+    #create table object and remove found Product object from file.
+    product_to_remove.delete_from_CVS_file
+  end
+
+  #sourced from http://stackoverflow.com/questions/26707169/how-to-remove-a-row-from-a-csv-with-ruby
+  def delete_from_CVS_file
+    #creates table object with headers
+    table = CSV.table(@@data_path, headers: true)
+    #uses delete_if method to delete row that matches id passed in at destory
+    table.delete_if do |row|
+      row[:id] == self.id
+    end
+    #opens csv file to write.
+    File.open(@@data_path, 'w') do |csv|
+      csv.write(table.to_csv)
+    end
+    #returns deleted product
+    return self
+  end
 end
