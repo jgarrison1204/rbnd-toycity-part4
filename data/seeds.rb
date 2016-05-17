@@ -11,4 +11,5 @@ def db_seed
     name: Faker::Commerce.product_name,
     price: Faker::Commerce.price
     )
+  end
 end
