@@ -5,6 +5,7 @@ require 'csv'
 class Udacidata
   # Your code goes here!
   @@data_path = File.dirname(__FILE__) + "/../data/data.csv"
+  create_finder_methods("brand","name")
   def self.create(options={})
     product_to_add = Product.new(options)
     #"a+" is from the IO open mode which tells the file to Read-write see  http://ruby-doc.org/core-2.0.0/IO.html#method-c-new-label-IO+Open+Mode
@@ -50,11 +51,11 @@ class Udacidata
   end
 
   def self.destroy(n)
-    #locate product to remove
+    #locate product to remove by calling find method.
+    #calls all returns an array with all project objects.
+    #product_to_remove stores individual project object to delete
     product_to_remove = find(n)
-    #delete product
-    all.delete(product_to_remove)
-    #create table object and remove found Product object from file.
+    #create table object and remove found Product object from array and file.
     product_to_remove.delete_from_CVS_file
   end
 
@@ -74,7 +75,11 @@ class Udacidata
     return self
   end
 
-  def find_by_brand(brand)
-    all.each {|product| return product if product.brand == brand}
+  def self.where(options={})
+    all.select {|product| product.brand == options[:brand]}
+  end
+
+  def update(options={})
+
   end
 end
