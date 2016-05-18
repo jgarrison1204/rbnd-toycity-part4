@@ -80,6 +80,9 @@ class Udacidata
   end
 
   def update(options={})
-
+    self.id = options[:id] if options[:id]
+    self.brand = options[:brand] if options[:brand]
+    self.name = options[:name] if options[:name]
+    self.price = options[:price] if options[:price]
   end
 end
