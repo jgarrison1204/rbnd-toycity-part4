@@ -79,10 +79,25 @@ class Udacidata
     all.select {|product| product.brand == options[:brand]}
   end
 
-  def update(options={})
-    self.id = options[:id] if options[:id]
-    self.brand = options[:brand] if options[:brand]
-    self.name = options[:name] if options[:name]
-    self.price = options[:price] if options[:price]
+  def update(options = {})
+    updated_products = []
+    table = CSV.table(@@data_path, headers: true)
+    table.each do |cell|
+      #Replaced instance variables with hashs because data is now in CSV.table
+      #Self.id is calling the id of the Product object from find.() in the test method.
+      #removed id from being updated since its a unique identifier in the CSV file
+      if cell[:id] == self.id
+          cell[:price] = options[:price] if options[:price]
+          cell[:brand] = options[:brand] if options[:brand]
+          cell[:name] = options[:name] if options[:name]
+          #Need to create new product object with updated values
+          updated_products = Product.create(id: cell[:id], brand: cell[:brand], name: cell[:product], price: cell[:price])
+      end
+    end
+    #opens csv file to write.
+    File.open(@@data_path, 'w') do |csv|
+     csv.write(table.to_csv)
+    end
+    updated_products
   end
 end
