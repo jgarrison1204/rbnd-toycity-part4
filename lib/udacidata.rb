@@ -10,7 +10,7 @@ class Udacidata
     product_to_add = Product.new(options)
     #"a+" is from the IO open mode which tells the file to Read-write see  http://ruby-doc.org/core-2.0.0/IO.html#method-c-new-label-IO+Open+Mode
     CSV.open(@@data_path, "a+") do |csv|
-      csv << [product_to_add.id, product_to_add.brand, product_to_add.name, product_to_add.price]
+      csv << [product_to_add.id, product_to_add.brand, product_to_add.name, product_to_add.price.to_f]
     end
     product_to_add
   end
@@ -76,7 +76,11 @@ class Udacidata
   end
 
   def self.where(options={})
-    all.select {|product| product.brand == options[:brand]}
+    if options[:brand]
+      all.select {|product| product.brand == options[:brand]}
+    else options[:name]
+      all.select {|product| product.name == options[:name]}
+    end
   end
 
   def update(options = {})
