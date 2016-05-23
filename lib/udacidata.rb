@@ -47,7 +47,11 @@ class Udacidata
   end
 
   def self.find(n)
-    all.each {|product| return product if product.id == n}
+    finder = all.select {|product| return product if product.id == n}
+    if finder.empty?
+      raise NoProductReturnedError, "Sorry! This product does not exist. Please try another ID."
+    end
+    finder
   end
 
   def self.destroy(n)
@@ -55,7 +59,7 @@ class Udacidata
     #calls all returns an array with all project objects.
     #product_to_remove stores individual project object to delete
     product_to_remove = find(n)
-    #create table object and remove found Product object from array and file.
+      #create table object and remove found Product object from array and file.
     product_to_remove.delete_from_CVS_file
   end
 
