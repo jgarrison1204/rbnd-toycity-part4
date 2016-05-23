@@ -1,20 +1,27 @@
 module Analyzable
   # Your code goes here!
   @@total_price = 0
-  @@counter = []
-  @@counter_brand = {}
+  @@counter_brand = {"whatever":0}
   @@counter_name = {}
 
   def average_price(object)
     object.each do |price|
       @@total_price += price.price.to_f
-      @@counter << price
     end
-    average = (@@total_price/@@counter.length).round(2)
+    average = (@@total_price/object.length).round(2)
   end
 
   def print_report(all_data)
-    all_data.map {|product| product}.to_s
+    reporter = "Average price for all toys: #{average_price(all_data)}\n"
+    reporter += "Count by brand:"
+    count_by_brand(all_data).each do |brand, number|
+      reporter += "   #{brand} - #{number}\n"
+    end
+    reporter += "Count by name:"
+    count_by_name(all_data).each do |name, number|
+      reporter += "   #{name}: #{number}"
+    end
+    reporter
   end
 
   def count_by_brand(object)
